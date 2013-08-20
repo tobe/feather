@@ -38,7 +38,7 @@ Class feather {
                 $this->load_single();
             break;
 
-            case is_numeric($this->mode):
+            case is_int($this->mode):
                 // Loads a number of posts, using a for loop
                 $this->load_some();
             break;
@@ -135,8 +135,6 @@ Class feather {
         // Sort it by date.
         array_multisort(array_map('filemtime', $files), SORT_DESC, $files);
 
-
-
         // Are there any files at all? - Friendly
         if(empty($files)) {
            throw new Exception('There is nothing here...yet.'); 
@@ -185,11 +183,101 @@ Class feather {
     }
 
     private function load_some() {
-        
+        // Load a number of entries
+        $files = glob($this->directory . '*.entry');
+
+        // Sort it by date.
+        array_multisort(array_map('filemtime', $files), SORT_DESC, $files);
+
+        // Are there any files at all? - Friendly
+        if(empty($files)) {
+            throw new Exception('There is nothing here...yet.'); 
+        }
+
+        #var_dump($files);die;
+
+        for($i = 0; $i < $this->mode; $i++) {
+            // Some sanity checking.
+            if(!file_exists($files[$i]) || !is_readable($files[$i])) {
+                throw new Exception('Could not access ' . $file . '. Does it exist? Permissions? $ chmod.');
+            }
+
+            // Assign a file handle, rb so it works on *DOS.
+            $fp = fopen($files[$i], 'rb');
+            if(!$fp) { throw new Exception('Could not fopen ' . $files[$i]); }
+
+            // Read into the file handle
+            $data = fread($fp, filesize($files[$i]));
+            if(!$data) { throw new Exception('Could not fread ' . $files[$i]); }
+
+            // Close it now
+            fclose($fp);
+
+            // Send this off to the parser before outputting.
+            $content = $this->parse($data, $files[$i]);
+
+            // Output!
+            // Grab the pattern and do some replacing
+            #$look_for       = ['{user}', '{hostname}', '{time}', '{nice_time}', '{date}', '{title}', ];
+
+            $look_for = [];
+            foreach($content as $k => $v) {
+                $look_for[$k]     = '{' . $k  . '}';
+            }
+
+            $pattern_reset = $this->pattern;
+            foreach($look_for as $k => $v) {
+                $this->pattern = str_replace($v, $content[$k], $this->pattern);
+            }
+
+            echo $this->pattern;
+            $this->pattern = $pattern_reset;
+
+            $x = count($files);
+            $x = $x - 1;
+
+            if($i >= $x) {
+                break;
+            }
+        }
     }
 
     private function load_single() {
+        // Load a single entry.
+        if(!file_exists($this->directory . $this->mode) || !is_readable($this->directory . $this->mode)) {
+            throw new Exception('Could not access ' . $this->directory . $this->mode . '. Does it exist? Permissions? $ chmod.');
+        }
 
+        // Assign a file handle, rb so it works on *DOS.
+        $fp = fopen($this->directory . $this->mode, 'rb');
+        if(!$fp) { throw new Exception('Could not fopen ' . $this->directory . $this->mode); }
+
+        // Read into the file handle
+        $data = fread($fp, filesize($this->directory . $this->mode));
+        if(!$data) { throw new Exception('Could not fread ' . $this->directory . $this->mode); }
+
+        // Close it now
+        fclose($fp);
+
+        // Send this off to the parser before outputting.
+        $content = $this->parse($data, $this->directory . $this->mode);
+
+        // Output!
+        // Grab the pattern and do some replacing
+        #$look_for       = ['{user}', '{hostname}', '{time}', '{nice_time}', '{date}', '{title}', ];
+
+        $look_for = [];
+        foreach($content as $k => $v) {
+            $look_for[$k]     = '{' . $k  . '}';
+        }
+
+        $pattern_reset = $this->pattern;
+        foreach($look_for as $k => $v) {
+            $this->pattern = str_replace($v, $content[$k], $this->pattern);
+        }
+
+        echo $this->pattern;
+        $this->pattern = $pattern_reset;       
     }
 
 }

@@ -23,7 +23,7 @@ $pattern = '
 require './feather.php';
 
 try {
-    $feather = new feather('entries\\', $pattern, NULL);
+    $feather = new feather('entries\\', $pattern, 'hello_world.entry');
 }catch(Exception $e) {
     echo 'Exception: ' . $e->getMessage();
 }

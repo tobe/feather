@@ -67,22 +67,23 @@ You can also use BBCode in your entries, since raw HTML is disabled by default. 
 
 You can use the following BBCode tags:
 
-* [bold][/bold] - Makes your text strong (weight 700)
-* [italic][/italic] - Makes your text `<em>`
-* [underline][/underline] - Makes your text get underlined.
-* [strikethrough][/strikethrough] - ..really?
-* [image][/image] - `<a href="$1" target="_blank"><img src="..." class="featherimg" style="max-width: 750px; max-height: 400px;"></a>`
-* [link][/link] - Makes your text a hyperlink.
-* [font color="#H3XC0L0R"][/font] - Colorizes your font.
-* [heading=1][/heading] - Makes your text <h1>. Change the 1 to some other number for other sizes.
-* [center][/center] - Centres your content.
-* [list][/list] - `<li></li>`.
-* [ul][/ul] - `<ul></ul>`.
-* [code][/code] - `<pre></pre>`.
-* [codeline][/codeline] - `<code></code>`.
-* [codebox][/codebox] - Fancy <pre> codebox.
-* [p][/p] - PARAGRAPH.
+* `[bold][/bold]` - Makes your text strong (weight 700)
+* `[italic][/italic]` - Makes your text `<em>`
+* `[underline][/underline]` - Makes your text get underlined.
+* `[strikethrough][/strikethrough]` - ..really?
+* `[image][/image]` - `<a href="$1" target="_blank"><img src="..." class="featherimg" style="max-width: 750px; max-height: 400px;"></a>`
+* `[link][/link]` - Makes your text a hyperlink.
+* `[font color="#H3XC0L0R"][/font]` - Colorizes your font.
+* `[heading=1][/heading]` - Makes your text `<h1>`. Change the `1` to some other number for other sizes.
+* `[center][/center]` - Centres your content.
+* `[list][/list]` - `<li></li>`.
+* `[ul][/ul]` - `<ul></ul>`.
+* `[code][/code]` - `<pre></pre>`.
+* `[codeline][/codeline]` - `<code></code>`.
+* `[codebox][/codebox]` - Fancy `<pre>` codebox.
+* `[p][/p]` - PARAGRAPH.
 
 **IF you would like to see these more in detail, go to line 83-98!**
+
 **Note:** If you are running this on a non posix compliant environment such as Windows, you should really edit the line 10 if you plan on using the `{user}` variable.
 That should be it. Hf.

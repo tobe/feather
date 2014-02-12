@@ -83,6 +83,9 @@ You can use the following BBCode tags:
 * `[codebox][/codebox]` - Fancy `<pre>` codebox.
 * `[p][/p]` - PARAGRAPH.
 
+In order to insert a new line manually, just enter `\n` at the end of the line. This will insert a `<br>` element.
+You can change this on line 61 if you'd like. If you want to make it parse a real newline (\n or \r\n) as a line break, simply replace `'\n'` with either `"\r\n"` or `"\n"`, depending on the line endings you use (dos/nix)
+
 **IF you would like to see these more in detail, go to line 83-98!**
 
 **Note:** If you are running this on a non posix compliant environment such as Windows, you should really edit the line 10 if you plan on using the `{user}` variable.
